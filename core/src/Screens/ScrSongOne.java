@@ -103,11 +103,7 @@ public class ScrSongOne extends InputAdapter implements Screen {
         ArcRandCol[3] = Color.PURPLE;
         for (int i = 0; i < 4; i++) {
             ArSprGrey[i] = new Sprite(new Texture("Grey" + i + ".png")); //BL, BR, TL, TR
-            if (i < 2) {
-                ArSprGrey[i].setPosition(AlvShuffle.get(i + 2).x, AlvShuffle.get(i + 2).y);
-            } else {
-                ArSprGrey[i].setPosition(AlvShuffle.get(i - 2).x, AlvShuffle.get(i - 2).y);
-            }
+            ArSprGrey[i].setPosition(AlvShuffle.get(i).x, AlvShuffle.get(i).y);
             ArSprGrey[i].setSize(w / 2, h / 2);
         }
         for (int i = 0; i < 4; i++) {
@@ -129,7 +125,7 @@ public class ScrSongOne extends InputAdapter implements Screen {
         for (int i = 0; i < 10; i++) {
             Sprite[] arSprDance = new Sprite[8];
             for (int k = 0; k < 8; k++) {
-                nNext = k * fW;
+                fSx = k * fW;
                 fSy = i * fH;
                 sprDance = new Sprite(txSheet, fSx, fSy, fW, fH);
                 arSprDance[k] = new Sprite(sprDance);
@@ -210,7 +206,7 @@ public class ScrSongOne extends InputAdapter implements Screen {
             } else {//draw grey sprites
                 Color();
                 for (int k = 0; k < 4; k++) {
-                    ArSprColours/*Grey*/[k].draw(batch);
+                    ArSprGrey[k].draw(batch);
                 }
                 shapeRendHud.rect(recHUD.getX(), 0, recHUD.getWidth(), recHUD.getHeight());
             }
