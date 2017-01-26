@@ -26,7 +26,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
@@ -38,20 +37,18 @@ public class ScrSongOne extends InputAdapter implements Screen {
     private float w = Gdx.graphics.getWidth(), h = Gdx.graphics.getHeight();
     private SpriteBatch batch, batchFonts;
     private Texture imgs[] = new Texture[4], imgsG[] = new Texture[4];
-    private Sprite ArSprColours[] = new Sprite[4], ArSprGrey[] = new Sprite[4], spriteP;
+    private Sprite arSprColours[] = new Sprite[4], ArSprGrey[] = new Sprite[4], spriteP;
     private boolean isCorrect, isExit, isCirc, isKeyChange, isClick, isDone, bCount = true, isJUp, isRand, isCont, isPause, isCol = true, isColPause = true, isColNoClick;
     private BitmapFont font;
     private Circle circ;
-    ArrayList<Vector2> AlvShuffle = new ArrayList();
+    ArrayList<Vector2> AlvShuffle = new ArrayList();//The arraylist of vectors. Shuffle to represent the fact that the vectors get shuffled
     private Vector2 vec1, vec2, vec3, vec4;
-    private String ArsCols[] = new String[4];
-    private Color ArcRandCol[] = new Color[4];
+    private String arsCols[] = new String[4];
+    private Color arcRandCol[] = new Color[4];
     ShapeRenderer shapeRenderer, shapeRendHud;
     private Rectangle recHUD;
     public static float fXMid, fYMid, fGood = 1/*number of correct clicks*/, fEff = 0/*% correct so far*/;
     public static int nJ = 0/**/, nTimeout = 0, /*when nTimeout == nMaxOut: change middle colour*/ nMaxOut = 90, nCount = 0, nNext, nCountSwitch = 0, nRand = 10, nJMax, nCountCol = 0, nClick = 0;
-    //ArrayList<Rectangle> AlRandRect = new ArrayList();
-    //0 = TL, 1 = TR, 2 = BL, 3 = BR. 
     //=========================TV INP=============================//
     int nGB = 0, nTextX, nTextY;
     Sprite sprDance;
@@ -75,7 +72,6 @@ public class ScrSongOne extends InputAdapter implements Screen {
         fYMid = Gdx.graphics.getHeight() / 2;
         typerounds = new ScrTypeRounds(game);
         nJMax = Integer.parseInt(typerounds.sRounds);
-        //System.out.println(nJMax);
         vec1 = new Vector2(0, 0);
         vec2 = new Vector2(w / 2, 0);
         vec3 = new Vector2(0, h / 2);
@@ -88,29 +84,29 @@ public class ScrSongOne extends InputAdapter implements Screen {
         shapeRendHud = new ShapeRenderer();
         circ = new Circle(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 150);
         spriteP.setSize(w / 3, h / 3);
-        ArsCols[0] = "RED";
-        ArsCols[1] = "BLUE";
-        ArsCols[2] = "GREEN";
-        ArsCols[3] = "PURPLE";
+        arsCols[0] = "RED";
+        arsCols[1] = "BLUE";
+        arsCols[2] = "GREEN";
+        arsCols[3] = "PURPLE";
         AlvShuffle.add(vec1);
         AlvShuffle.add(vec2);
         AlvShuffle.add(vec3);
         AlvShuffle.add(vec4);
         recHUD = new Rectangle(0, h - (h / 4.2f), w, (h / 4.2f) - 25);
-        ArcRandCol[0] = Color.RED;
-        ArcRandCol[1] = Color.BLUE;
-        ArcRandCol[2] = Color.GREEN;
-        ArcRandCol[3] = Color.PURPLE;
+        arcRandCol[0] = Color.RED;
+        arcRandCol[1] = Color.BLUE;
+        arcRandCol[2] = Color.GREEN;
+        arcRandCol[3] = Color.PURPLE;
         for (int i = 0; i < 4; i++) {
             ArSprGrey[i] = new Sprite(new Texture("Grey" + i + ".png")); //BL, BR, TL, TR
             ArSprGrey[i].setPosition(AlvShuffle.get(i).x, AlvShuffle.get(i).y);
             ArSprGrey[i].setSize(w / 2, h / 2);
         }
         for (int i = 0; i < 4; i++) {
-            ArSprColours[i] = new Sprite(new Texture("Col" + i + ".png"));//RED, BLUE, GREEN, PURPLE
-            ArSprColours[i].setPosition(AlvShuffle.get(i).x, AlvShuffle.get(i).y);
-            ArSprColours[i].setSize(w / 2, h / 2);
-//            System.out.println( ArSprColours[i].getWidth() + " : " + ArSprColours[i].getHeight());
+            arSprColours[i] = new Sprite(new Texture("Col" + i + ".png"));//RED, BLUE, GREEN, PURPLE
+            arSprColours[i].setPosition(AlvShuffle.get(i).x, AlvShuffle.get(i).y);
+            arSprColours[i].setSize(w / 2, h / 2);
+//            System.out.println( arSprColours[i].getWidth() + " : " + arSprColours[i].getHeight());
         }
         spriteP.setPosition(w / 2 - spriteP.getWidth() / 2, h - spriteP.getHeight());
         //=========================TV INP=============================//
@@ -192,7 +188,7 @@ public class ScrSongOne extends InputAdapter implements Screen {
                 isCol = true;
                 //System.out.println(AlvShuffle);
                 for (int i = 0; i < 4; i++) {
-                    ArSprColours[i].setPosition(AlvShuffle.get(i).x, AlvShuffle.get(i).y);
+                    arSprColours[i].setPosition(AlvShuffle.get(i).x, AlvShuffle.get(i).y);
                 }
             }
             shapeRenderer.begin(ShapeType.Filled);
@@ -201,7 +197,7 @@ public class ScrSongOne extends InputAdapter implements Screen {
             if (isCol) {//draw coloured sprites
                 font.setColor(Color.WHITE);
                 for (int k = 0; k < 4; k++) {
-                    ArSprColours[k].draw(batch);
+                    arSprColours[k].draw(batch);
                 }
             } else {//draw grey sprites
                 Color();
@@ -213,7 +209,7 @@ public class ScrSongOne extends InputAdapter implements Screen {
             if (isExit) {//exit
                 Gdx.app.exit();
             }//these nested ifs dictate what colour to display in the middle
-            shapeRenderer.setColor(ArcRandCol[nNext]);
+            shapeRenderer.setColor(arcRandCol[nNext]);
             if (isClick && nTimeout != nMaxOut) {//make the center circle flash white
                 nCount++;
                 shapeRenderer.setColor(Color.WHITE);
@@ -376,7 +372,7 @@ public class ScrSongOne extends InputAdapter implements Screen {
             if (button == Buttons.LEFT && !circ.contains(screenX, screenY)) {
                 nClick = 4;
                 for (int i = 0; i < 4; i++) {              
-                    if (ArSprColours[i].getBoundingRectangle().contains(screenX, screenY)) {
+                    if (arSprColours[i].getBoundingRectangle().contains(screenX, screenY)) {
                         if (i < 2) {
                             nClick = i + 2;
                         } else {
